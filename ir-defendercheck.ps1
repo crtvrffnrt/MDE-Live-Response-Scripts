@@ -44,3 +44,12 @@ Get-WinEvent -LogName "Microsoft-Windows-Windows Defender/Operational" |
 
 Write-Host "---- Currente AV Provider ----"
 Get-CimInstance -Namespace "root\SecurityCenter2" -ClassName AntiVirusProduct
+
+
+Write-Host "---- Defender Quarantine Items (MpCmdRun -Restore -ListAll) ----"
+$mpCmdRun = "C:\Program Files\Windows Defender\MpCmdRun.exe"
+if (Test-Path $mpCmdRun) {
+    & "$mpCmdRun" -Restore -ListAll
+} else {
+    Write-Warning "MpCmdRun.exe not found at expected path: $mpCmdRun"
+}
